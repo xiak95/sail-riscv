@@ -15,6 +15,8 @@ else
   $(error '$(ARCH)' is not a valid architecture, must be one of: RV32, RV64)
 endif
 
+SIM_VERSION := "$(shell git describe --abbrev=4 --dirty --always --tags)"
+
 SAIL_FLEN := riscv_flen_D.sail
 
 # Instruction sources, depending on target
@@ -124,7 +126,7 @@ GMP_LIBS = $(shell pkg-config --libs gmp || echo -lgmp)
 ZLIB_FLAGS = $(shell pkg-config --cflags zlib)
 ZLIB_LIBS = $(shell pkg-config --libs zlib)
 
-C_FLAGS = -I $(SAIL_LIB_DIR) -I c_emulator $(GMP_FLAGS) $(ZLIB_FLAGS) $(SOFTFLOAT_FLAGS) -fcommon
+C_FLAGS = -I $(SAIL_LIB_DIR) -I c_emulator $(GMP_FLAGS) $(ZLIB_FLAGS) $(SOFTFLOAT_FLAGS) -fcommon -DSIM_VERSION=\"$(SIM_VERSION)\"
 C_LIBS  = $(GMP_LIBS) $(ZLIB_LIBS) $(SOFTFLOAT_LIBS)
 
 # The C simulator can be built to be linked against Spike for tandem-verification.

@@ -124,6 +124,7 @@ static struct option options[] = {
   {"rvfi-dii",                    required_argument, 0, 'r'},
 #endif
   {"help",                        no_argument,       0, 'h'},
+  {"version",                     no_argument,       0, 'k'},
   {"trace",                       optional_argument, 0, 'v'},
   {"no-trace",                    optional_argument, 0, 'V'},
   {"inst-limit",                  required_argument, 0, 'l'},
@@ -228,6 +229,7 @@ char *process_args(int argc, char **argv)
                     "z:"
                     "b:"
                     "t:"
+                    "k"
                     "T:"
                     "h"
 #ifdef RVFI_DII
@@ -301,6 +303,9 @@ char *process_args(int argc, char **argv)
     case 't':
       term_log = strdup(optarg);
       fprintf(stderr, "using %s for terminal output.\n", term_log);
+      break;
+    case 'k':
+      fprintf(stderr, "Version: %s.\n", SIM_VERSION);
       break;
     case 'T':
       sig_file = strdup(optarg);
